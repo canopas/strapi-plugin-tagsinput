@@ -14,3 +14,7 @@ Using yarn,
 ```
 yarn add strapi-plugin-tagsinput
 ```
+
+## Demo
+
+[How to use tagsinput](https://github.com/canopas/strapi-plugin-tagsinput/blob/master/assets/tagsinput.webm)
