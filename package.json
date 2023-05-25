@@ -4,7 +4,7 @@
   "description": "Add tagsinput in your strapi project",
   "strapi": {
     "name": "tagsinput",
-    "description": "Description of Tagsinput plugin",
+    "description": "Add tagsinput in your strapi project",
     "kind": "plugin",
     "displayName": "Tagsinput"
   },
