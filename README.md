@@ -18,4 +18,5 @@ yarn add strapi-plugin-tagsinput
 ## Demo
 How to use tagsinput?
 
-[tagsinput.webm](https://github.com/canopas/strapi-plugin-tagsinput/assets/69897605/10d4bbb9-5e5a-4dd1-ad3e-f33d4fefe5ca)
+![Tagsinput](https://github.com/canopas/strapi-plugin-tagsinput/assets/69897605/bb6f78f3-39de-4d29-bb1f-c60e019c79ae)
+
