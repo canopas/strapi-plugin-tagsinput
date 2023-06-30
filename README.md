@@ -1,6 +1,7 @@
 # Strapi plugin tagsinput
 
-This plugin is used to add tagsinput in your strapi admin panel
+This plugin is used to add tagsinput in your strapi admin panel.
+Read more about it at [tagsinput guidence](https://blog.canopas.com/the-simple-guidance-how-to-add-tagsinput-customfield-plugin-in-strapi-b5d2b5af7c3b).
 
 ## How to Install
 
