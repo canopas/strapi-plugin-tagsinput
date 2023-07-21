@@ -21,3 +21,5 @@ How to use tagsinput?
 
 ![Tagsinput](https://github.com/canopas/strapi-plugin-tagsinput/assets/69897605/bb6f78f3-39de-4d29-bb1f-c60e019c79ae)
 
+## Licence
+This repository licenced under [MIT](https://github.com/canopas/strapi-plugin-tagsinput/blob/main/LICENSE).
