@@ -36,9 +36,9 @@
     "react-router-dom": "^5.3.4",
     "styled-components": "^5.3.6"
   },
-  "author": "A Strapi developer",
+  "author": "Canopas",
   "maintainers": [
-    "A Strapi developer"
+    "Canopas"
   ],
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
