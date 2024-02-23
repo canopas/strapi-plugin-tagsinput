@@ -1,7 +1,7 @@
 import TagsInput from "react-tagsinput";
-import "react-tagsinput/react-tagsinput.css";
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import "../styles/global.css";
 
 import {
   Flex,
@@ -51,8 +51,7 @@ const Tags = ({
       // GenericInput calls formatMessage and returns a string for the error
       error={error}
       hint={description && formatMessage(description)}
-      required={required}
-    >
+      required={required}>
       <Flex direction="column" alignItems="stretch" gap={1}>
         <FieldLabel action={labelAction}>{formatMessage(intlLabel)}</FieldLabel>
         <Flex>

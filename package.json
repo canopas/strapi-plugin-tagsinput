@@ -1,10 +1,10 @@
 {
   "name": "strapi-plugin-tagsinput",
-  "version": "1.0.1",
-  "description": "Add tagsinput in your strapi project",
+  "version": "1.0.3",
+  "description": "Tagsinput plugin for your strapi project",
   "strapi": {
     "name": "tagsinput",
-    "description": "Add tagsinput in your strapi project",
+    "description": "Tagsinput plugin for your strapi project",
     "kind": "plugin",
     "displayName": "Tagsinput"
   },
@@ -13,35 +13,35 @@
     "url": "git+https://github.com/canopas/strapi-plugin-tagsinput.git"
   },
   "dependencies": {
-    "@babel/preset-react": "^7.18.6",
-    "@strapi/design-system": "^1.6.3",
-    "@strapi/helper-plugin": "^4.6.0",
-    "@strapi/icons": "^1.6.3",
-    "prop-types": "^15.7.2",
-    "react-tagsinput": "^3.20.1"
+    "@babel/preset-react": "^7.23.3",
+    "@strapi/design-system": "^1.14.1",
+    "@strapi/helper-plugin": "^4.20.2",
+    "@strapi/icons": "^1.14.1",
+    "prop-types": "^15.8.1",
+    "react-tagsinput": "^3.20.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
-    "@babel/core": "^7.21.8",
-    "@babel/preset-env": "^7.21.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.4",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.11"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "@strapi/strapi": "^4.20.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.4",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.11"
   },
   "author": "Canopas",
   "maintainers": [
     "Canopas"
   ],
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=14.19.1 <=20.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT",
