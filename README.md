@@ -1,6 +1,6 @@
 <p align="center"><a href="https://canopas.com/contact"><img src="./assets/banner.png"></a></p>
 
-<h1><strong>Tagsinput plugin for strapi</strong></h1>
+<h1><strong>Tagsinput plugin for strapi with suggestions</strong></h1>
 
 This plugin is used to add tagsinput in your strapi admin panel.
 Read more about it at [tagsinput guidence](https://blog.canopas.com/the-simple-guidance-how-to-add-tagsinput-customfield-plugin-in-strapi-b5d2b5af7c3b).
@@ -20,6 +20,30 @@ Using yarn,
 ```
 yarn add strapi-plugin-tagsinput
 ```
+
+## How to use
+
+After installation, you can add tagsinput as custom field.
+
+#### Suggestions for tag
+
+While adding tagsInput, you will see `API URL` field.
+
+If you want to use REST API for suggestions, then add your API url in this field.
+
+**Notes:**
+
+- If API domain is different, then full API URL is required. i.e `http://localhost:1337/api/v1/tags?fields[0]=name` (Make sure API CORS are enabled for your strapi domain in this case).
+- Otherwise add only path of API i.e `/api/v1/tags?fields[0]=name`
+- API response should contain `name` field.
+  For example,
+
+  ```
+    [
+        { name: "tag1" },
+        { name: "tag2" }
+    ]
+  ```
 
 ## Showcase
 
