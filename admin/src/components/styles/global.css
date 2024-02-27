@@ -51,5 +51,40 @@
   margin-top: 1px;
   outline: none;
   padding: 5px;
-  width: 80px;
+  width: 100%;
+}
+
+.react-tagsinput > span {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.react-autosuggest__container {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+}
+
+.react-autosuggest__suggestions-container {
+  position: absolute;
+  z-index: 200;
+  width: 280px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  background-color: #fff;
+}
+
+.react-autosuggest__suggestions-container--open {
+  border: 1px solid #aaa;
+}
+
+.react-autosuggest__suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.react-autosuggest__suggestion--highlighted,
+.react-autosuggest__suggestion--focused {
+  background-color: #ccc;
 }

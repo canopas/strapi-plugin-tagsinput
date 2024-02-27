@@ -20,6 +20,28 @@ export default {
             /* webpackChunkName: "input-component" */ "./components/Input"
           ),
       },
+      options: {
+        base: [
+          {
+            sectionTitle: {
+              id: "tagsinput.tags.section.apiUrl",
+              defaultMessage: "API Url",
+            },
+            items: [
+              {
+                intlLabel: {
+                  id: "tagsinput.tags.section.apiUrl",
+                  defaultMessage: "Rest API URL for suggestions",
+                },
+                name: "options.apiUrl",
+                type: "text",
+                value: "",
+                options: [],
+              },
+            ],
+          },
+        ],
+      },
     });
   },
 };
