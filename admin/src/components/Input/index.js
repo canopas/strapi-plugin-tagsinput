@@ -94,16 +94,25 @@ const Tags = ({
     const inputValue = (props.value && props.value.trim().toLowerCase()) || "";
     const inputLength = inputValue.length;
 
-    let s = suggestions;
-
-    if (suggestions.length <= 0) {
+    let s = suggestions.data ? suggestions.data : suggestions;
+    if (suggestions <= 0) {
       getSuggestions();
     }
 
     if (inputLength > 0) {
-      s = suggestions.filter((state) => {
-        return state.name.toLowerCase().slice(0, inputLength) === inputValue;
-      });
+      s = s.map((state) => {
+        const suggestionName = state.attributes
+          ? state.attributes.name.toLowerCase()
+          : state.name.toLowerCase();
+
+        if (suggestionName.slice(0, inputLength) === inputValue) {
+          return {
+            id: state.id,
+            name: suggestionName,
+          };
+        }
+        return null
+      }).filter((ele) => ele !== null || ele != undefined);
     }
 
     return (
@@ -130,7 +139,8 @@ const Tags = ({
       // GenericInput calls formatMessage and returns a string for the error
       error={error}
       hint={description && formatMessage(description)}
-      required={required}>
+      required={required}
+    >
       <Flex
         direction="column"
         alignItems="stretch"
@@ -138,7 +148,8 @@ const Tags = ({
         style={{
           position: `relative`,
         }}
-        ref={inputEle}>
+        ref={inputEle}
+      >
         <FieldLabel action={labelAction}>{formatMessage(intlLabel)}</FieldLabel>
         <Flex direction="column">
           <TagsInput
