@@ -23,27 +23,18 @@ yarn add strapi-plugin-tagsinput
 
 ## How to use
 
-After installation, you can add tagsinput as custom field.
+After installation, you can add tagsinput as a custom field.
 
 #### Suggestions for tag
 
-While adding tagsInput, you will see `API URL` field.
+While adding tagsInput, you will see the `API URL` field.
 
 If you want to use REST API for suggestions, then add your API url in this field.
 
 **Notes:**
 
-- If API domain is different, then full API URL is required. i.e `http://localhost:1337/api/v1/tags?fields[0]=name` (Make sure API CORS are enabled for your strapi domain in this case).
-- Otherwise add only path of API i.e `/api/v1/tags?fields[0]=name`
-- API response should contain `name` field.
-  For example,
-
-  ```
-    [
-        { name: "tag1" },
-        { name: "tag2" }
-    ]
-  ```
+- If the API domain is different, then a full API URL is required. i.e. `http://localhost:1337/api/tags?fields[0]=name` (Make sure API CORS are enabled for your strapi domain in this case).
+- Otherwise, add only the path of API i.e `/api/tags?fields[0]=name`
 
 ## Showcase
 
@@ -71,4 +62,4 @@ This repository is owned and maintained by the [Canopas team](https://canopas.co
 
 ## Licence
 
-This repository licenced under [MIT](https://github.com/canopas/strapi-plugin-tagsinput/blob/main/LICENSE).
+This repository is licenced under [MIT](https://github.com/canopas/strapi-plugin-tagsinput/blob/main/LICENSE).
