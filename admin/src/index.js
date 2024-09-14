@@ -38,6 +38,16 @@ export default {
                 value: "",
                 options: [],
               },
+              {
+                intlLabel: {
+                  id: "tagsinput.tags.section.apiUrl",
+                  defaultMessage: "API Token",
+                },
+                name: "options.apiToken",
+                type: "text",
+                value: "",
+                options: [],
+              },
             ],
           },
         ],
