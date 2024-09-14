@@ -75,7 +75,12 @@ const Tags = ({
       return [];
     }
     try {
-      const res = await axios.get(attribute.options["apiUrl"]);
+      const token = attribute.options["apiToken"];
+      const res = await axios.get(attribute.options["apiUrl"], {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setSuggestions(res.data);
     } catch (err) {
       console.log(err);
