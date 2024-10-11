@@ -1,3 +1,4 @@
+export const css = `
 :root {
   --primary: rgb(151, 54, 232);
   --secondary: rgb(255, 255, 255);
@@ -84,7 +85,16 @@
   padding: 10px 20px;
 }
 
+.react-autosuggest__suggestion > span {
+  font-size: 13px;
+  font-weight: 400;
+}
+
 .react-autosuggest__suggestion--highlighted,
 .react-autosuggest__suggestion--focused {
   background-color: #ccc;
 }
+`
+
+
+

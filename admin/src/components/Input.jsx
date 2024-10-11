@@ -2,17 +2,10 @@ import TagsInput from "react-tagsinput";
 import Autosuggest from "react-autosuggest";
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
-import "../styles/global.css";
 import axios from "axios";
-
-import {
-  Flex,
-  Field,
-  FieldHint,
-  FieldError,
-  FieldLabel,
-} from "@strapi/design-system";
+import { Flex, Field } from "@strapi/design-system";
 import { useIntl } from "react-intl";
+import { css } from "./styles/global.ts";
 
 const Tags = ({
   attribute,
@@ -35,6 +28,8 @@ const Tags = ({
     }
   });
   const [suggestions, setSuggestions] = useState([]);
+  const apiUrl = attribute?.options ? attribute.options["apiUrl"] : "";
+  const attrName = apiUrl.slice(apiUrl.lastIndexOf('=') + 1);
   let inputEle = useRef(null);
 
   useEffect(() => {
@@ -71,11 +66,11 @@ const Tags = ({
   };
 
   const getSuggestions = async () => {
-    if (!attribute.options || !attribute.options["apiUrl"]) {
+    if (!apiUrl) {
       return [];
     }
     try {
-      const res = await axios.get(attribute.options["apiUrl"]);
+      const res = await axios.get(apiUrl);
       setSuggestions(res.data);
     } catch (err) {
       console.log(err);
@@ -100,19 +95,21 @@ const Tags = ({
     }
 
     if (inputLength > 0) {
-      s = s.map((state) => {
-        const suggestionName = state.attributes
-          ? state.attributes.name.toLowerCase()
-          : state.name.toLowerCase();
+      s = s
+        .map((state) => {
+          const suggestionName = state.attributes
+            ? state.attributes[attrName].toLowerCase()
+            : state[attrName].toLowerCase();
 
-        if (suggestionName.slice(0, inputLength) === inputValue) {
-          return {
-            id: state.id,
-            name: suggestionName,
-          };
-        }
-        return null
-      }).filter((ele) => ele !== null || ele != undefined);
+          if (suggestionName.slice(0, inputLength) === inputValue) {
+            return {
+              id: state.id,
+              name: suggestionName,
+            };
+          }
+          return null;
+        })
+        .filter((ele) => ele !== null || ele != undefined);
     }
 
     return (
@@ -133,36 +130,42 @@ const Tags = ({
   };
 
   return (
-    <Field
-      name={name}
-      id={name}
-      // GenericInput calls formatMessage and returns a string for the error
-      error={error}
-      hint={description && formatMessage(description)}
-      required={required}
-    >
-      <Flex
-        direction="column"
-        alignItems="stretch"
-        gap={1}
-        style={{
-          position: `relative`,
-        }}
-        ref={inputEle}
+    <>
+      <style>{css}</style>
+      <Field.Root
+        name={name}
+        id={name}
+        // GenericInput calls formatMessage and returns a string for the error
+        error={error}
+        hint={description && formatMessage({ id: description })}
+        required={required}
       >
-        <FieldLabel action={labelAction}>{formatMessage(intlLabel)}</FieldLabel>
-        <Flex direction="column">
-          <TagsInput
-            value={tags}
-            onChange={handleTagsChange}
-            onlyUnique={true}
-            renderInput={autocompleteRenderInput}
-          />
+        <Flex
+          direction="column"
+          alignItems="stretch"
+          gap={1}
+          style={{
+            position: `relative`,
+          }}
+          ref={inputEle}
+        >
+          <Field.Label action={labelAction}>
+            {intlLabel && formatMessage({ id: intlLabel })}
+          </Field.Label>
+          <Flex direction="column">
+            <TagsInput
+              classList={["test"]}
+              value={tags}
+              onChange={handleTagsChange}
+              onlyUnique={true}
+              renderInput={autocompleteRenderInput}
+            />
+          </Flex>
+          <Field.Hint />
+          <Field.Error />
         </Flex>
-        <FieldHint />
-        <FieldError />
-      </Flex>
-    </Field>
+      </Field.Root>
+    </>
   );
 };
 
