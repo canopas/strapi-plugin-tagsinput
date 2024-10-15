@@ -1,10 +1,10 @@
-import TagsInput from "react-tagsinput";
-import Autosuggest from "react-autosuggest";
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Flex, Field } from "@strapi/design-system";
 import { useIntl } from "react-intl";
+import TagsInput from "react-tagsinput";
+import Autosuggest from "react-autosuggest";
 import { css } from "./styles/global.ts";
 
 const Tags = ({
@@ -19,61 +19,61 @@ const Tags = ({
   value,
 }) => {
   const { formatMessage } = useIntl();
+  const apiUrl = attribute?.options?.apiUrl || "";
+  const attrName = apiUrl.slice(apiUrl.lastIndexOf("=") + 1);
+  const inputEle = useRef(null);
+
   const [tags, setTags] = useState(() => {
     try {
-      const values = JSON.parse(value);
-      return values.map((value) => value.name);
+      const values = typeof value === "string" ? JSON.parse(value) : value;
+      return values.map((value) => value[attrName]);
     } catch (e) {
       return [];
     }
   });
+
   const [suggestions, setSuggestions] = useState([]);
-  const apiUrl = attribute?.options ? attribute.options["apiUrl"] : "";
-  const attrName = apiUrl.slice(apiUrl.lastIndexOf('=') + 1);
-  let inputEle = useRef(null);
 
   useEffect(() => {
-    document.getElementsByClassName(
-      "react-autosuggest__suggestions-container"
-    )[0].style.top = inputEle.current.offsetHeight + 5 + "px";
-
-    function handleClickOutside(event) {
-      if (inputEle.current && !inputEle.current.contains(event.target)) {
-        document
-          .getElementsByClassName("react-tagsinput")[0]
-          .classList.remove("react-tagsinput--focused");
-      } else {
-        document
-          .getElementsByClassName("react-tagsinput")[0]
-          .classList.add("react-tagsinput--focused");
-      }
+    const suggestionsContainer = document.querySelector(
+      ".react-autosuggest__suggestions-container"
+    );
+    if (suggestionsContainer && inputEle.current) {
+      suggestionsContainer.style.top = `${inputEle.current.offsetHeight + 5}px`;
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
 
-  const handleTagsChange = (tags) => {
-    setTags(tags);
+    const handleClickOutside = (event) => {
+      const tagsInput = document.querySelector(".react-tagsinput");
+      if (tagsInput) {
+        tagsInput.classList.toggle(
+          "react-tagsinput--focused",
+          inputEle.current?.contains(event.target)
+        );
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleTagsChange = (newTags) => {
+    setTags(newTags);
     onChange({
       target: {
         name,
-        value: JSON.stringify(tags.map((tag) => ({ name: tag }))),
+        value: JSON.stringify(newTags.map((tag) => ({ [attrName]: tag }))),
         type: attribute.type,
       },
     });
   };
 
   const getSuggestions = async () => {
-    if (!apiUrl) {
-      return [];
-    }
+    if (!apiUrl) return;
     try {
       const res = await axios.get(apiUrl);
       setSuggestions(res.data);
     } catch (err) {
-      console.log(err);
+      console.error("Error fetching suggestions:", err);
     }
   };
 
@@ -102,10 +102,9 @@ const Tags = ({
             : state[attrName].toLowerCase();
 
           if (suggestionName.slice(0, inputLength) === inputValue) {
-            return {
-              id: state.id,
-              name: suggestionName,
-            };
+            let suggObj = {id: state.id}
+            suggObj[attrName] = suggestionName
+            return suggObj;
           }
           return null;
         })
@@ -117,13 +116,12 @@ const Tags = ({
         ref={props.ref}
         suggestions={s}
         shouldRenderSuggestions={(value) => value && value.trim().length > 0}
-        getSuggestionValue={(s) => s.name}
-        renderSuggestion={(s) => <span>{s.name}</span>}
+        getSuggestionValue={(s) => s[attrName]}
+        renderSuggestion={(s) => <span>{s[attrName]}</span>}
         inputProps={{ ...props, onChange: handleOnChange }}
-        onSuggestionSelected={(e, { suggestion }) => {
-          props.addTag(suggestion.name);
-        }}
-        onSuggestionsClearRequested={() => this.setTags([])}
+        onSuggestionSelected={(_, { suggestion }) =>
+          props.addTag(suggestion[attrName])
+        }
         onSuggestionsFetchRequested={() => {}}
       />
     );
@@ -144,9 +142,7 @@ const Tags = ({
           direction="column"
           alignItems="stretch"
           gap={1}
-          style={{
-            position: `relative`,
-          }}
+          style={{ position: "relative" }}
           ref={inputEle}
         >
           <Field.Label action={labelAction}>
@@ -154,10 +150,9 @@ const Tags = ({
           </Field.Label>
           <Flex direction="column">
             <TagsInput
-              classList={["test"]}
               value={tags}
               onChange={handleTagsChange}
-              onlyUnique={true}
+              onlyUnique
               renderInput={autocompleteRenderInput}
             />
           </Flex>
