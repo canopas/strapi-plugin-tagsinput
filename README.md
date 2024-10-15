@@ -37,6 +37,7 @@ If you want to use REST API for suggestions, then add your API url in this field
 
 - If the API domain is different, then a full API URL is required. i.e. `http://localhost:1337/api/tags?fields[0]=name` (Make sure API CORS are enabled for your strapi domain in this case).
 - Otherwise, add only the path of API i.e `/api/tags?fields[0]=name`
+- You need to add custom logic for adding created tags in `Tags` collection.
 
 ## Showcase
 
