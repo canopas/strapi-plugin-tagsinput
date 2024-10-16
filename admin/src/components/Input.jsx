@@ -20,13 +20,13 @@ const Tags = ({
 }) => {
   const { formatMessage } = useIntl();
   const apiUrl = attribute?.options?.apiUrl || "";
-  const attrName = apiUrl.slice(apiUrl.lastIndexOf("=") + 1);
+  const attrName = apiUrl.slice(apiUrl.lastIndexOf("=") + 1) || "name";
   const inputEle = useRef(null);
 
   const [tags, setTags] = useState(() => {
     try {
       const values = typeof value === "string" ? JSON.parse(value) : value;
-      return values.map((value) => value[attrName]);
+      return values.map((value) => value[attrName] || value["name"]);
     } catch (e) {
       return [];
     }
