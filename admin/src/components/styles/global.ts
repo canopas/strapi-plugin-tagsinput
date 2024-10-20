@@ -2,12 +2,40 @@ export const css = `
 :root {
   --primary: rgb(151, 54, 232);
   --secondary: rgb(255, 255, 255);
+  --text: #32324d;
+  --background: #ffffff;
+  --input-background: #ffffff;
+  --input-border: #dcdce4;
+  --tag-background: #f0f0ff;
+  --tag-text: #4945ff;
+  --suggestion-background: #ffffff;
+  --suggestion-hover: #f6f6f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: rgb(151, 54, 232);
+    --secondary: rgb(33, 33, 52);
+    --text: #ffffff;
+    --background: #212134;
+    --input-background: #181826;
+    --input-border: #4a4a6a;
+    --tag-background: #4945ff;
+    --tag-text: #ffffff;
+    --suggestion-background: #181826;
+    --suggestion-hover: #212134;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
 }
 
 .react-tagsinput {
   width: 100%;
-  background-color: var(--secondary);
-  border: 1px solid #ccc;
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
   border-radius: 4px;
   overflow: hidden;
   padding-left: 5px;
@@ -19,10 +47,10 @@ export const css = `
 }
 
 .react-tagsinput-tag {
-  background-color: var(--primary);
+  background-color: var(--tag-background);
   border-radius: 2px;
-  border: 1px solid var(--primary);
-  color: var(--secondary);
+  border: 1px solid var(--tag-background);
+  color: var(--tag-text);
   display: inline-block;
   font-family: sans-serif;
   font-size: 13px;
@@ -44,7 +72,7 @@ export const css = `
 .react-tagsinput-input {
   background: transparent;
   border: 0;
-  color: #777;
+  color: var(--text);
   font-family: sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -73,11 +101,11 @@ export const css = `
   margin: 0;
   padding: 0;
   list-style-type: none;
-  background-color: #fff;
+  background-color: var(--suggestion-background);
 }
 
 .react-autosuggest__suggestions-container--open {
-  border: 1px solid #aaa;
+  border: 1px solid var(--input-border);
 }
 
 .react-autosuggest__suggestion {
@@ -92,9 +120,6 @@ export const css = `
 
 .react-autosuggest__suggestion--highlighted,
 .react-autosuggest__suggestion--focused {
-  background-color: #ccc;
+  background-color: var(--suggestion-hover);
 }
-`
-
-
-
+`;
