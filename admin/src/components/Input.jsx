@@ -124,7 +124,7 @@ const Tags = ({
       }
     };
 
-    const inputValue = (props.value && props.value.trim().toLowerCase()) || "";
+    const inputValue = (props.value && props.value.trim()) || "";
     const inputLength = inputValue.length;
 
     let s = suggestions.data || [];
@@ -132,7 +132,7 @@ const Tags = ({
       getSuggestions();
     }
 
-    if (inputLength > 0) {
+   if (inputLength > 0) {
       s = s
         .filter((state) => {
           const suggestionName = state[attrName] || "";
@@ -143,7 +143,7 @@ const Tags = ({
           [attrName]: state[attrName] || "",
         }));
     }
-
+    
     return (
       <Autosuggest
         ref={props.ref}
