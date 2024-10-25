@@ -1,41 +1,16 @@
-export const css = `
+export const css = (theme: "light" | "dark") => `
 :root {
-  --primary: rgb(151, 54, 232);
-  --secondary: rgb(255, 255, 255);
-  --text: #32324d;
-  --background: #ffffff;
-  --input-background: #ffffff;
-  --input-border: #dcdce4;
-  --tag-background: #f0f0ff;
-  --tag-text: #4945ff;
-  --suggestion-background: #ffffff;
-  --suggestion-hover: #f6f6f9;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: rgb(151, 54, 232);
-    --secondary: rgb(33, 33, 52);
-    --text: #ffffff;
-    --background: #212134;
-    --input-background: #181826;
-    --input-border: #4a4a6a;
-    --tag-background: #4945ff;
-    --tag-text: #ffffff;
-    --suggestion-background: #181826;
-    --suggestion-hover: #212134;
-  }
-}
-
-body {
-  background-color: var(--background);
-  color: var(--text);
+  --primary: ${theme === "light" ? "#4945ff" : "#7b79ff"};
+  --secondary: ${theme === "light" ? "#FFFFFF" : "#212134"};
+  --border: ${theme === "light" ? "#e0e0e0" : "#4a4a6a"};
+  --background: ${theme === "light" ? "#F7FAFC" : "#212134"};
+  --text: ${theme === "light" ? "#4A5568" : "#fff"};
 }
 
 .react-tagsinput {
   width: 100%;
-  background-color: var(--input-background);
-  border: 1px solid var(--input-border);
+  background-color: var(--background);
+  border: 1px solid var(--border);
   border-radius: 4px;
   overflow: hidden;
   padding-left: 5px;
@@ -49,8 +24,7 @@ body {
 .react-tagsinput-tag {
   background-color: var(--tag-background);
   border-radius: 2px;
-  border: 1px solid var(--tag-background);
-  color: var(--tag-text);
+  color: #fff;
   display: inline-block;
   font-family: sans-serif;
   font-size: 13px;
@@ -101,11 +75,11 @@ body {
   margin: 0;
   padding: 0;
   list-style-type: none;
-  background-color: var(--suggestion-background);
+  background-color: var(--background);
 }
 
 .react-autosuggest__suggestions-container--open {
-  border: 1px solid var(--input-border);
+  border: 1px solid var(--primary);
 }
 
 .react-autosuggest__suggestion {
@@ -120,6 +94,6 @@ body {
 
 .react-autosuggest__suggestion--highlighted,
 .react-autosuggest__suggestion--focused {
-  background-color: var(--suggestion-hover);
+  background-color: var(--primary);
 }
 `;

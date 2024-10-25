@@ -22,6 +22,7 @@ const Tags = ({
   const apiUrl = attribute?.options?.apiUrl || "";
   const attrName = apiUrl.slice(apiUrl.lastIndexOf("=") + 1) || "name";
   const inputEle = useRef(null);
+  const theme = window.localStorage?.STRAPI_THEME; // "light" or "dark"
 
   const [tags, setTags] = useState(() => {
     try {
@@ -121,29 +122,31 @@ const Tags = ({
         e.preventDefault();
       } else {
         props.onChange(e);
+        getSuggestions(); // Fetch suggestions on input change
       }
+    };
+
+    const handleOnFocus = () => {
+      getSuggestions(); // Fetch suggestions on focus
     };
 
     const inputValue = (props.value && props.value.trim()) || "";
     const inputLength = inputValue.length;
 
     let s = suggestions.data || [];
-    if (s.length <= 0) {
-      getSuggestions();
-    }
 
-   if (inputLength > 0) {
+    if (inputLength > 0) {
       s = s
         .filter((state) => {
           const suggestionName = state[attrName] || "";
-          return suggestionName.toLowerCase().slice(0, inputLength) === inputValue;
+          return suggestionName.toLowerCase().startsWith(inputValue.toLowerCase());
         })
         .map((state) => ({
           id: state.id,
           [attrName]: state[attrName] || "",
         }));
     }
-    
+
     return (
       <Autosuggest
         ref={props.ref}
@@ -151,7 +154,11 @@ const Tags = ({
         shouldRenderSuggestions={(value) => value && value.trim().length > 0}
         getSuggestionValue={(s) => s[attrName]}
         renderSuggestion={(s) => <span>{s[attrName]}</span>}
-        inputProps={{ ...props, onChange: handleOnChange }}
+        inputProps={{
+          ...props,
+          onChange: handleOnChange,
+          onFocus: handleOnFocus, // Add onFocus handler
+        }}
         onSuggestionSelected={(_, { suggestion }) => props.addTag(suggestion[attrName])}
         onSuggestionsFetchRequested={() => {}}
       />
@@ -160,7 +167,7 @@ const Tags = ({
 
   return (
     <>
-      <style>{css}</style>
+      <style>{css(theme)}</style>
       <Field.Root
         name={name}
         id={name}
@@ -176,7 +183,7 @@ const Tags = ({
           ref={inputEle}
         >
           <Field.Label action={labelAction}>
-            {intlLabel && formatMessage({ id: intlLabel })}
+            {(intlLabel && formatMessage({ id: intlLabel })) || name}
           </Field.Label>
           <Flex direction="column">
             <TagsInput
