@@ -26,7 +26,7 @@ const Tags = ({
   const [tags, setTags] = useState(() => {
     try {
       const values = typeof value === "string" ? JSON.parse(value) : value;
-      return values.map((value) => value[attrName] || value["name"]);
+      return Array.isArray(values) ? values.map((v) => v[attrName] || v.name || v) : [];
     } catch (e) {
       return [];
     }
@@ -56,12 +56,50 @@ const Tags = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleTagsChange = (newTags) => {
+  const handleTagsChange = async (newTags) => {
+    const lastTag = newTags[newTags.length - 1];
+    const suggestionsArray = suggestions.data || [];
+    const existingTag = suggestionsArray.find(
+      (s) => s[attrName]?.toLowerCase() === lastTag.toLowerCase()
+    );
+
+    if (!existingTag) {
+      if (apiUrl) {
+        try {
+          const response = await axios.post(apiUrl, {
+            data: {
+              [attrName]: lastTag,
+            },
+          });
+
+          setSuggestions((prevSuggestions) => {
+            const newSuggestionsData = [...(prevSuggestions.data || []), response.data.data];
+            return { ...prevSuggestions, data: newSuggestionsData };
+          });
+
+          newTags[newTags.length - 1] = response.data.data[attrName];
+        } catch (error) {
+          console.error("Error creating new tag:", error);
+          // Don't remove the tag if API call fails, allow it to be added locally
+        }
+      } else {
+        // If there's no apiUrl, just add the new tag to the suggestions
+        setSuggestions((prevSuggestions) => {
+          const newSuggestion = { id: Date.now(), [attrName]: lastTag };
+          const newSuggestionsData = [...(prevSuggestions.data || []), newSuggestion];
+          return { ...prevSuggestions, data: newSuggestionsData };
+        });
+      }
+    }
+
     setTags(newTags);
+
+    const value = JSON.stringify(newTags.map((tag) => ({ [attrName]: tag })));
+
     onChange({
       target: {
         name,
-        value: JSON.stringify(newTags.map((tag) => ({ [attrName]: tag }))),
+        value,
         type: attribute.type,
       },
     });
@@ -73,7 +111,7 @@ const Tags = ({
       const res = await axios.get(apiUrl);
       setSuggestions(res.data);
     } catch (err) {
-      console.error("Error fetching suggestions:", err);
+      setSuggestions({ data: [] });
     }
   };
 
@@ -86,31 +124,26 @@ const Tags = ({
       }
     };
 
-    const inputValue = (props.value && props.value.trim().toLowerCase()) || "";
+    const inputValue = (props.value && props.value.trim()) || "";
     const inputLength = inputValue.length;
 
-    let s = suggestions.data ? suggestions.data : suggestions;
-    if (suggestions <= 0) {
+    let s = suggestions.data || [];
+    if (s.length <= 0) {
       getSuggestions();
     }
 
-    if (inputLength > 0) {
+   if (inputLength > 0) {
       s = s
-        .map((state) => {
-          const suggestionName = state.attributes
-            ? state.attributes[attrName].toLowerCase()
-            : state[attrName].toLowerCase();
-
-          if (suggestionName.slice(0, inputLength) === inputValue) {
-            let suggObj = {id: state.id}
-            suggObj[attrName] = suggestionName
-            return suggObj;
-          }
-          return null;
+        .filter((state) => {
+          const suggestionName = state[attrName] || "";
+          return suggestionName.toLowerCase().slice(0, inputLength) === inputValue;
         })
-        .filter((ele) => ele !== null || ele != undefined);
+        .map((state) => ({
+          id: state.id,
+          [attrName]: state[attrName] || "",
+        }));
     }
-
+    
     return (
       <Autosuggest
         ref={props.ref}
@@ -119,9 +152,7 @@ const Tags = ({
         getSuggestionValue={(s) => s[attrName]}
         renderSuggestion={(s) => <span>{s[attrName]}</span>}
         inputProps={{ ...props, onChange: handleOnChange }}
-        onSuggestionSelected={(_, { suggestion }) =>
-          props.addTag(suggestion[attrName])
-        }
+        onSuggestionSelected={(_, { suggestion }) => props.addTag(suggestion[attrName])}
         onSuggestionsFetchRequested={() => {}}
       />
     );
@@ -133,7 +164,6 @@ const Tags = ({
       <Field.Root
         name={name}
         id={name}
-        // GenericInput calls formatMessage and returns a string for the error
         error={error}
         hint={description && formatMessage({ id: description })}
         required={required}
