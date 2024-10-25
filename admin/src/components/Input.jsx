@@ -86,7 +86,7 @@ const Tags = ({
       }
     };
 
-    const inputValue = (props.value && props.value.trim().toLowerCase()) || "";
+    const inputValue = (props.value && props.value.trim()) || "";
     const inputLength = inputValue.length;
 
     let s = suggestions.data ? suggestions.data : suggestions;
@@ -97,13 +97,11 @@ const Tags = ({
     if (inputLength > 0) {
       s = s
         .map((state) => {
-          const suggestionName = state.attributes
-            ? state.attributes[attrName].toLowerCase()
-            : state[attrName].toLowerCase();
+          const suggestionName = state.attributes ? state.attributes[attrName] : state[attrName];
 
-          if (suggestionName.slice(0, inputLength) === inputValue) {
-            let suggObj = {id: state.id}
-            suggObj[attrName] = suggestionName
+          if (suggestionName.toLowerCase().slice(0, inputLength) === inputValue.toLowerCase()) {
+            let suggObj = { id: state.id };
+            suggObj[attrName] = suggestionName;
             return suggObj;
           }
           return null;
@@ -119,9 +117,7 @@ const Tags = ({
         getSuggestionValue={(s) => s[attrName]}
         renderSuggestion={(s) => <span>{s[attrName]}</span>}
         inputProps={{ ...props, onChange: handleOnChange }}
-        onSuggestionSelected={(_, { suggestion }) =>
-          props.addTag(suggestion[attrName])
-        }
+        onSuggestionSelected={(_, { suggestion }) => props.addTag(suggestion[attrName])}
         onSuggestionsFetchRequested={() => {}}
       />
     );

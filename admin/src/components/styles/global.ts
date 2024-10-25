@@ -94,7 +94,4 @@ export const css = `
 .react-autosuggest__suggestion--focused {
   background-color: #ccc;
 }
-`
-
-
-
+`;
