@@ -1,13 +1,16 @@
-export const css = `
+export const css = (theme: "light" | "dark") => `
 :root {
-  --primary: rgb(151, 54, 232);
-  --secondary: rgb(255, 255, 255);
+  --primary: ${theme === "light" ? "#4945ff" : "#7b79ff"};
+  --secondary: ${theme === "light" ? "#FFFFFF" : "#212134"};
+  --border: ${theme === "light" ? "#e0e0e0" : "#4a4a6a"};
+  --background: ${theme === "light" ? "#F7FAFC" : "#212134"};
+  --text: ${theme === "light" ? "#4A5568" : "#fff"};
 }
 
 .react-tagsinput {
   width: 100%;
-  background-color: var(--secondary);
-  border: 1px solid #ccc;
+  background-color: var(--background);
+  border: 1px solid var(--border);
   border-radius: 4px;
   overflow: hidden;
   padding-left: 5px;
@@ -19,10 +22,9 @@ export const css = `
 }
 
 .react-tagsinput-tag {
-  background-color: var(--primary);
+  background-color: var(--tag-background);
   border-radius: 2px;
-  border: 1px solid var(--primary);
-  color: var(--secondary);
+  color: #fff;
   display: inline-block;
   font-family: sans-serif;
   font-size: 13px;
@@ -44,7 +46,7 @@ export const css = `
 .react-tagsinput-input {
   background: transparent;
   border: 0;
-  color: #777;
+  color: var(--text);
   font-family: sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -73,11 +75,11 @@ export const css = `
   margin: 0;
   padding: 0;
   list-style-type: none;
-  background-color: #fff;
+  background-color: var(--background);
 }
 
 .react-autosuggest__suggestions-container--open {
-  border: 1px solid #aaa;
+  border: 1px solid var(--primary);
 }
 
 .react-autosuggest__suggestion {
@@ -92,6 +94,6 @@ export const css = `
 
 .react-autosuggest__suggestion--highlighted,
 .react-autosuggest__suggestion--focused {
-  background-color: #ccc;
+  background-color: var(--primary);
 }
 `;
