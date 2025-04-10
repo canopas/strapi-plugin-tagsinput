@@ -5,7 +5,9 @@ import { Flex, Field } from "@strapi/design-system";
 import { useIntl } from "react-intl";
 import TagsInput from "react-tagsinput";
 import Autosuggest from "react-autosuggest";
-import { css } from "./styles/global.ts";
+import { getStyling } from "./styles/global";
+
+const ThemeStyle = getStyling(localStorage.getItem("STRAPI_THEME"));
 
 const Tags = ({
   attribute,
@@ -160,7 +162,6 @@ const Tags = ({
 
   return (
     <>
-      <style>{css}</style>
       <Field.Root
         name={name}
         id={name}
@@ -178,6 +179,7 @@ const Tags = ({
           <Field.Label action={labelAction}>
             {intlLabel && formatMessage({ id: intlLabel })}
           </Field.Label>
+          <ThemeStyle />
           <Flex direction="column">
             <TagsInput
               value={tags}
