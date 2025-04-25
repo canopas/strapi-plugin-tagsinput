@@ -1,4 +1,5 @@
 import pluginId from "./pluginId";
+import { getTranslation } from './utils/getTranslation';
 
 export default {
   register(app) {
@@ -7,12 +8,12 @@ export default {
       pluginId: pluginId,
       type: "text",
       intlLabel: {
-        id: "tagsinput.tag.label",
-        defaultMessage: "TagsInput",
+        id: getTranslation('form.label'),
+        defaultMessage: 'TagsInput',
       },
       intlDescription: {
-        id: "tagsinput.tag.description",
-        defaultMessage: "TagsInput to add custom tags",
+        id: getTranslation('form.description'),
+        defaultMessage: 'TagsInput to add custom tags',
       },
       components: {
         Input: async () =>
@@ -24,13 +25,13 @@ export default {
         base: [
           {
             sectionTitle: {
-              id: "tagsinput.tags.section.apiUrl",
+              id: "form.section.apiUrl",
               defaultMessage: "API Url",
             },
             items: [
               {
                 intlLabel: {
-                  id: "tagsinput.tags.section.apiUrl",
+                  id: "form.apiUrl",
                   defaultMessage: "Rest API URL for suggestions",
                 },
                 name: "options.apiUrl",
