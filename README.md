@@ -2,7 +2,7 @@
 
 <h1><strong>Tagsinput plugin for strapi with suggestions</strong></h1>
 
-<h3>🚀<strong>Use version <a href="https://github.com/canopas/strapi-plugin-tagsinput/releases/tag/2.0.2">2.0.2</a> for Strapi 5 support</strong>🚀</h3>
+<h3>🚀<strong>Strapi 5 supported from <a href="https://github.com/canopas/strapi-plugin-tagsinput/releases/tag/2.0.2">2.0.2</a> </strong>🚀</h3>
 
 This plugin is used to add tagsinput in your strapi admin panel.
 Read more about it at [tagsinput guidence](https://blog.canopas.com/the-simple-guidance-how-to-add-tagsinput-customfield-plugin-in-strapi-b5d2b5af7c3b).
