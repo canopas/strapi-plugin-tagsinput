@@ -13,7 +13,7 @@ const Tags = ({
   attribute,
   description,
   error,
-  intlLabel,
+  label,
   labelAction,
   name,
   onChange,
@@ -176,9 +176,7 @@ const Tags = ({
           style={{ position: "relative" }}
           ref={inputEle}
         >
-          <Field.Label action={labelAction}>
-            {intlLabel && formatMessage({ id: intlLabel })}
-          </Field.Label>
+          {label && <Field.Label action={labelAction}>{formatMessage({ id: label, defaultMessage: "Tags" })}</Field.Label>}
           <ThemeStyle />
           <Flex direction="column">
             <TagsInput
@@ -206,7 +204,7 @@ Tags.defaultProps = {
 };
 
 Tags.propTypes = {
-  intlLabel: PropTypes.object.isRequired,
+  label: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   attribute: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,

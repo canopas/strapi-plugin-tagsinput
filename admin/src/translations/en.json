@@ -1,0 +1,6 @@
+{
+    "form.label": "TagsInput",
+    "form.description": "TagsInput to add custom tags",
+    "form.section.apiUrl": "API Url",
+    "form.apiUrl": "Rest API URL for suggestions"
+}
